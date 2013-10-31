@@ -26,7 +26,7 @@ var t = require('../lib/tokens.js').tokens;
     test.ifError(value)
 */
 
-exports.programdata = {
+exports.tokeniser = {
 
     'creation': function (test) {
         var t = new Tokeniser();
