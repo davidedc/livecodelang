@@ -35,6 +35,32 @@ exports.tokeniser = {
         test.done();
     },
 
+    'parse identifier': function (test) {
+        var tokeniser, p, result, expected;
+
+        tokeniser = new Tokeniser();
+        p = new ProgramData("identify   ");
+
+        result = tokeniser.parseIdentifier(p);
+        expected = t.identifier('identify');
+
+        test.deepEqual(result, expected, 'should return p');
+        test.done();
+    },
+
+    'parse simple number': function (test) {
+        var tokeniser, p, result, expected;
+
+        tokeniser = new Tokeniser();
+        p = new ProgramData("2352   ");
+
+        result = tokeniser.parseNumber(p);
+        expected = t.number('2352');
+
+        test.deepEqual(result, expected, 'should return p');
+        test.done();
+    },
+
     'empty program': function (test) {
         var tokeniser, p, output, expected;
 
@@ -66,30 +92,5 @@ exports.tokeniser = {
         test.deepEqual(output, expected, 'should return p');
         test.done();
     },
-
-    'simple tokenise': function (test) {
-        var tokeniser, p, output, expected;
-
-        tokeniser = new Tokeniser();
-        p = new ProgramData("ab cd\n5\ngh ij kl");
-
-        output = tokeniser.tokenise(p);
-        expected = [
-            t.sof,
-            t.identifier('ab'),
-            t.identifier('cd'),
-            t.newline,
-            t.number('5'),
-            t.newline,
-            t.identifier('gh'),
-            t.identifier('ij'),
-            t.identifier('kl'),
-            t.eof
-        ];
-
-        test.deepEqual(output, expected, 'should return p');
-        test.done();
-    }
-
 };
 
