@@ -4,6 +4,7 @@
 
 var ProgramData = require('../lib/programdata.js').ProgramData;
 var Lexer = require('../lib/lexer.js').Lexer;
+var t = require('../lib/tokens.js').tokens;
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -35,11 +36,58 @@ exports.programdata = {
     },
 
     'empty program': function (test) {
-        var l, p;
+        var l, p, output, expected;
+
         l = new Lexer();
         p = new ProgramData("");
 
-        test.ok(l, 'should be created');
+        output = l.tokenise(p);
+        expected = [
+            t.sof,
+            t.eof
+        ];
+
+        test.deepEqual(output, expected, 'should return p');
+        test.done();
+    },
+
+    'just spaces': function (test) {
+        var l, p, output, expected;
+
+        l = new Lexer();
+        p = new ProgramData("    ");
+
+        output = l.tokenise(p);
+        expected = [
+            t.sof,
+            t.eof
+        ];
+
+        test.deepEqual(output, expected, 'should return p');
+        test.done();
+    },
+
+    'simple tokenise': function (test) {
+        var l, p, output, expected;
+
+        l = new Lexer();
+        p = new ProgramData("ab cd\n5\ngh ij kl");
+
+        output = l.tokenise(p);
+        expected = [
+            t.sof,
+            t.identifier('ab'),
+            t.identifier('cd'),
+            t.newline,
+            t.number('5'),
+            t.newline,
+            t.identifier('gh'),
+            t.identifier('ij'),
+            t.identifier('kl'),
+            t.eof
+        ];
+
+        test.deepEqual(output, expected, 'should return p');
         test.done();
     }
 
