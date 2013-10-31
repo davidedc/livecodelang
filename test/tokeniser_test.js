@@ -3,7 +3,7 @@
 'use strict';
 
 var ProgramData = require('../lib/programdata.js').ProgramData;
-var Lexer = require('../lib/lexer.js').Lexer;
+var Tokeniser = require('../lib/tokeniser.js').Tokeniser;
 var t = require('../lib/tokens.js').tokens;
 
 /*
@@ -29,19 +29,19 @@ var t = require('../lib/tokens.js').tokens;
 exports.programdata = {
 
     'creation': function (test) {
-        var l = new Lexer();
+        var t = new Tokeniser();
 
-        test.ok(l, 'should be created');
+        test.ok(t, 'should be created');
         test.done();
     },
 
     'empty program': function (test) {
-        var l, p, output, expected;
+        var tokeniser, p, output, expected;
 
-        l = new Lexer();
+        tokeniser = new Tokeniser();
         p = new ProgramData("");
 
-        output = l.tokenise(p);
+        output = tokeniser.tokenise(p);
         expected = [
             t.sof,
             t.eof
@@ -52,12 +52,12 @@ exports.programdata = {
     },
 
     'just spaces': function (test) {
-        var l, p, output, expected;
+        var tokeniser, p, output, expected;
 
-        l = new Lexer();
+        tokeniser = new Tokeniser();
         p = new ProgramData("    ");
 
-        output = l.tokenise(p);
+        output = tokeniser.tokenise(p);
         expected = [
             t.sof,
             t.eof
@@ -68,12 +68,12 @@ exports.programdata = {
     },
 
     'simple tokenise': function (test) {
-        var l, p, output, expected;
+        var tokeniser, p, output, expected;
 
-        l = new Lexer();
+        tokeniser = new Tokeniser();
         p = new ProgramData("ab cd\n5\ngh ij kl");
 
-        output = l.tokenise(p);
+        output = tokeniser.tokenise(p);
         expected = [
             t.sof,
             t.identifier('ab'),
