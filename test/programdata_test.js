@@ -49,6 +49,17 @@ exports.programdata = {
         test.done();
     },
 
+    'unpop': function (test) {
+        var p = new ProgramData("program data");
+
+        test.equal(p.pop(), 'p', 'should return p');
+        test.equal(p.pop(), 'r', 'should return r');
+        p.unpop();
+        p.unpop();
+        test.equal(p.pop(), 'p', 'should return p');
+        test.done();
+    },
+
     'end data': function (test) {
         var p = new ProgramData("pr");
 
