@@ -1,3 +1,5 @@
+/* global exports, require */
+
 'use strict';
 
 var livecodelang = require('../lib/livecodelang.js');
