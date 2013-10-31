@@ -1,0 +1,26 @@
+{
+  "name": "livecodelang",
+  "description": "The live code lab parser.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/rumblesan/livecodelang",
+  "author": {
+    "name": "Guy John",
+    "email": "guy@rumblesan.com"
+  },
+  "main": "lib/livecodelang",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt": "~0.4.1"
+  },
+  "keywords": []
+}
