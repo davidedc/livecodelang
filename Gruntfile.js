@@ -60,6 +60,17 @@ module.exports = function (grunt) {
                 tasks: ['jshint:test', 'nodeunit']
             },
         },
+        jison: {
+            main : {
+                options: {
+                    moduleType: 'amd'
+                },
+                files: {
+                    'parser.js': 'grammar/lcl-grammar.jison'
+                }
+            }
+        }
+
     });
 
     // These plugins provide necessary tasks.
@@ -68,6 +79,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+
+    // Non contrib tasks
+    grunt.loadNpmTasks('grunt-jison');
 
     // Default task.
     grunt.registerTask('default', ['jshint', 'nodeunit', 'concat', 'uglify']);
