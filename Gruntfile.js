@@ -59,6 +59,10 @@ module.exports = function (grunt) {
                 files: '<%= jshint.test.src %>',
                 tasks: ['jshint:test', 'nodeunit']
             },
+            grammar: {
+                files: 'grammar/lcl-grammar.jison',
+                tasks: ['jison']
+            },
         },
         jison: {
             main : {
@@ -66,7 +70,7 @@ module.exports = function (grunt) {
                     moduleType: 'amd'
                 },
                 files: {
-                    'parser.js': 'grammar/lcl-grammar.jison'
+                    'js/parser.js': 'grammar/lcl-grammar.jison'
                 }
             }
         }

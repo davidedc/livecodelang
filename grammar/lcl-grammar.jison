@@ -36,20 +36,20 @@
 %% /* language grammar */
 
 program
-    : e EOF
+    : statements EOF
         { return $1; }
-    | e ';' program
-        { return [$1, $2]; }
+    ;
+
+statements
+    : assignment
+        { $$ = $1; }
+    | assignment ';' statements
+        { $$ = [$1, $3]; }
     ;
 
 assignment
     : IDENTIFIER '=' e
-        { $$ = ['=', $1, $2]; }
-    ;
-
-expr
-    : e
-    | assignment
+        { $$ = ['=', $1, $3]; }
     ;
 
 e
