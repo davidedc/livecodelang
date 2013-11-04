@@ -54,10 +54,12 @@
 
 /* operator associations and precedence */
 
+%left '&&' '||'
+%left '>' '<' '>=' '<=' '=='
+%left '!'
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 %left '^'
-%right '%'
 %left UMINUS
 
 %start program
