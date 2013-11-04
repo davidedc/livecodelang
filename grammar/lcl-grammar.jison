@@ -62,43 +62,108 @@
 %left '^'
 %left UMINUS
 
-%start program
+%start Program
 
 %% /* language grammar */
 
-program
-    : statements EOF
-        { return $1; }
+Program
+    :
+    | SourceElements
     ;
 
-statements
-    : assignment
+SourceElements
+    : Statement
         { $$ = $1; }
-    | assignment ';' statements
+    | SourceElements ';' Statements
         { $$ = [$1, $3]; }
     ;
 
-assignment
-    : IDENTIFIER '=' e
+Block
+    : BLOCKSTART SourceElements BLOCKEND
+        {$$ = ['BLOCK', $1]; }
+    ;
+
+Statement
+    : Assignment
+    | FunctionCall
+    | IfStructure
+    | TimesLoop
+    ;
+
+Assignment
+    : IDENTIFIER '=' Expression
         { $$ = ['=', $1, $3]; }
     ;
 
-e
-    : e '+' e
+FunctionCall
+    : IDENTIFIER FunctionArgs
+        { $$ = ['FUNCTIONCALL', $1, $2]; }
+    ;
+
+FunctionArgs
+    :
+    | Expression
+    | FunctionArgs ',' Expression
+        { $$ = [$1, $2]; }
+    ;
+
+IfStructure
+    : IF Expression Block
+        { $$ = [$1, $2, $3]; }
+    | IF Expression Block ELSE Block
+        { $$ = [$1, $2, $3, $4]; }
+    ;
+
+FunctionDef
+    : Identifier '->' '(' FunctionArgNames ')' '->' Expression
+        { $$ = ['FUNC', $2, $5]; }
+    | Identifier '->' '(' FunctionArgNames ')' '->' Block
+        { $$ = ['FUNC', $2, $5]; }
+    ;
+
+FunctionArgNames
+    :
+    | IDENTIFIER
+    | FunctionArgNames ',' IDENTIFIER
+    ;
+
+TimesLoop
+    : NUMBER 'times' '->' Block
+        { $$ = ['times', $1, $4]; }
+    ;
+
+Expression
+    : Expression '+' Expression
         { $$ = ['+', $1, $3]; }
-    | e '-' e
+    | Expression '-' Expression
         { $$ = ['-', $1, $3]; }
-    | e '*' e
+    | Expression '*' Expression
         { $$ = ['*', $1, $3]; }
-    | e '/' e
+    | Expression '/' Expression
         { $$ = ['/', $1, $3]; }
-    | e '^' e
+    | Expression '^' Expression
         { $$ = ['^', $1, $3]; }
-    | e '%'
+    | Expression '%' Expression
         { $$ = ['%', $1, $3]; }
-    | '-' e %prec UMINUS
+
+    | Expression '>' Expression
+        { $$ = ['>', $1, $3]; }
+    | Expression '<' Expression
+        { $$ = ['<', $1, $3]; }
+    | Expression '>=' Expression
+        { $$ = ['>=', $1, $3]; }
+    | Expression '<=' Expression
+        { $$ = ['<=' $1, $3]; }
+    | Expression '==' Expression
+        { $$ = ['==', $1, $3]; }
+    | Expression '&&' Expression
+        { $$ = ['&&', $1, $3]; }
+    | Expression '||' Expression
+        { $$ = ['||', $1, $3]; }
+
+    | '-' Expression %prec UMINUS
         { $$ = ['*', -1, $2]; }
-    | '(' e ')'
+    | '(' Expression ')'
         { $$ = $2; }
     | NUMBER
         { $$ = Number(yytext); }
