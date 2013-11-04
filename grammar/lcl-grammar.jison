@@ -6,18 +6,47 @@
 %%
 
 \s+                   /* skip whitespace */
+
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 [a-zA-Z]+\b           return 'IDENTIFIER'
+
+/* math operators */
 "*"                   return '*'
 "/"                   return '/'
 "-"                   return '-'
 "+"                   return '+'
 "^"                   return '^'
 "%"                   return '%'
+
+/* boolean operators */
+"!"                   return '!'
+">"                   return '>'
+"<"                   return '<'
+">="                  return '>='
+"<="                  return '<='
+"=="                  return '=='
+"&&"                  return '&&'
+"||"                  return '||'
+
+/* brackets */
 "("                   return '('
 ")"                   return ')'
+"{"                   return 'BLOCKSTART'
+"}"                   return 'BLOCKEND'
+
+/* assignment */
 "="                   return '='
-";"                   return ';'
+
+/* function creation */
+"->"                  return '->'
+
+/* control structures */
+"if"                  return 'IF'
+"elif"                return 'ELIF'
+"else"                return 'ELSE'
+
+/* misc */
+","                   return ','
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
