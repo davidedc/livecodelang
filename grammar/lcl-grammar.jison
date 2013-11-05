@@ -153,7 +153,7 @@ Expression
     | Expression '>=' Expression
         { $$ = ['>=', $1, $3]; }
     | Expression '<=' Expression
-        { $$ = ['<=' $1, $3]; }
+        { $$ = ['<=', $1, $3]; }
     | Expression '==' Expression
         { $$ = ['==', $1, $3]; }
     | Expression '&&' Expression
